@@ -9,6 +9,6 @@ export class AppService {
       .get('http://localhost:3301/')
       .toPromise();
 
-    return data;
+    return data + '\n(this written from B)';
   }
 }
