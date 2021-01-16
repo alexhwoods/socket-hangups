@@ -3,7 +3,7 @@ const app = express()
 const port = 3301
 
 app.get('/', (req, res) => {
-  setTimeout(() => res.send('Hello World!\n'), 10 * 1000)
+  setTimeout(() => res.send("Hello World! (from service A)\n"), 10 * 1000);
 })
 
 app.listen(port, () => {
