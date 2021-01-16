@@ -1,14 +1,15 @@
 import { Injectable, HttpService } from '@nestjs/common';
+import * as util from 'util';
+
+const sleep = util.promisify(setTimeout);
 
 @Injectable()
 export class AppService {
   constructor(private httpService: HttpService) {}
 
   async getHello(): Promise<string> {
-    const { data } = await this.httpService
-      .get('http://localhost:3301/')
-      .toPromise();
+    await sleep(5 * 1000);
 
-    return data + '\n(this written from B)';
+    return 'foo';
   }
 }
