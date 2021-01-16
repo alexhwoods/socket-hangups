@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import * as Agent from 'agentkeepalive';
 
 const agentConfig = {
-  maxSockets: 1, // we're trying to produce socket hangups. So this is a parameter we're gonna mess with
-  maxFreeSockets: 1,
+  maxSockets: 5, // we're trying to produce socket hangups. So this is a parameter we're gonna mess with
+  maxFreeSockets: 5,
   timeout: 60,
   freeSocketTimeout: 30,
 };
