@@ -3,8 +3,13 @@ import { Cron } from '@nestjs/schedule';
 import { ConfigurationService } from './configuration/configuration.service';
 import * as util from 'util';
 import { AxiosError, AxiosRequestConfig } from 'axios';
+import * as Agent from 'agentkeepalive';
 
 let count = 0;
+const agent = new Agent({
+  maxSockets: 1,
+  maxFreeSockets: 1,
+});
 
 @Injectable()
 export class AppService {
@@ -14,22 +19,48 @@ export class AppService {
   ) {}
 
   async getHello(): Promise<string> {
-    count++;;
+    count++;
     console.log(
-      `${this.formatDate(new Date())} | received request ${count}`,
+      `${this.formatDate(
+        new Date(),
+      )} | (nest's http service) received request ${count}`,
     );
 
     await this.httpService
       .get('http://localhost:3302')
-      // .get('https://google.com')
       .toPromise()
       .then(value => {
-        console.log('finished')
+        console.log(`${this.formatDate(new Date())} | finished`);
       })
       .catch(err => {
         if (err.isAxiosError) {
           const error = err as AxiosError;
-          console.log(error.message)
+          console.log(`${this.formatDate(new Date())} | ${error.message}`);
+        }
+      });
+
+    return 'fpp';
+  }
+
+  async getHelloWithAxios(): Promise<string> {
+    count++;
+    console.log(`${this.formatDate(new Date())} | (axios directly) received request ${count}`);
+
+    await this.httpService
+      .axiosRef({
+        url: 'http://localhost:3302',
+        method: 'GET',
+        httpAgent: agent
+      })
+      .then(value => {
+        console.log(`${this.formatDate(new Date())} | finished`);
+      })
+      .catch(err => {
+        if (err.isAxiosError) {
+          const error = err as AxiosError;
+          console.log(
+            `${this.formatDate(new Date())} | ${error.message}`,
+          );
         }
       });
 
