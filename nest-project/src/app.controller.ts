@@ -6,12 +6,12 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  async getHello(): Promise<string> {
+  async getHello() {
     return this.appService.getHello();
   }
 
   @Get('/axios')
-  async getHelloWithAxios(): Promise<string> {
+  async getHelloWithAxios() {
     return this.appService.getHelloWithAxios();
   }
 }

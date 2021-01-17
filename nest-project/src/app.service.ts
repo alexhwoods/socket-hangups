@@ -8,7 +8,11 @@ const url = 'https://google.com'
 export class AppService {
   constructor(private httpService: HttpService) {}
 
-  async getHello(): Promise<string> {
+  /*
+   * This function uses Nest's HttpService
+   * directly to make an HTTP call
+   */
+  async getHello() {
     count++;
     console.log(
       `${this.formatDate(
@@ -28,11 +32,13 @@ export class AppService {
           console.log(`${this.formatDate(new Date())} | ${error.message}`);
         }
       });
-
-    return 'fpp';
   }
 
-  async getHelloWithAxios(): Promise<string> {
+  /*
+   * This function uses HttpService's
+   * underlying `axiosRef`
+   */
+  async getHelloWithAxios() {
     count++;
     console.log(
       `${this.formatDate(
@@ -54,8 +60,6 @@ export class AppService {
           console.log(`${this.formatDate(new Date())} | ${error.message}`);
         }
       });
-
-    return 'fpp';
   }
 
   formatDate(date) {
