@@ -6,6 +6,8 @@ import { AxiosError, AxiosRequestConfig } from 'axios';
 import * as Agent from 'agentkeepalive';
 
 let count = 0;
+// const url = 'http://localhost:3302';
+const url = 'https://google.com'
 
 @Injectable()
 export class AppService {
@@ -23,7 +25,7 @@ export class AppService {
     );
 
     await this.httpService
-      .get('http://localhost:3302')
+      .get(url)
       .toPromise()
       .then(value => {
         console.log(`${this.formatDate(new Date())} | finished`);
@@ -44,7 +46,7 @@ export class AppService {
 
     await this.httpService
       .axiosRef({
-        url: 'http://localhost:3302',
+        url,
         method: 'GET',
       })
       .then(value => {
