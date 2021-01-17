@@ -6,10 +6,6 @@ import { AxiosError, AxiosRequestConfig } from 'axios';
 import * as Agent from 'agentkeepalive';
 
 let count = 0;
-const agent = new Agent({
-  maxSockets: 1,
-  maxFreeSockets: 1,
-});
 
 @Injectable()
 export class AppService {
@@ -50,7 +46,6 @@ export class AppService {
       .axiosRef({
         url: 'http://localhost:3302',
         method: 'GET',
-        httpAgent: agent
       })
       .then(value => {
         console.log(`${this.formatDate(new Date())} | finished`);
