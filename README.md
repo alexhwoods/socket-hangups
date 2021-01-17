@@ -25,7 +25,8 @@ requests=10 && k6 run --vus $requests --iterations $requests script-http-service
 
 In particular, it happens as soon as a socket goes to be reused for the first time. You'll notice that if you run the above tests with `requests=n-1`, where `n` is the size of the connection pool, you won't have an issue.
 
-
+Don't hit run it with too many requests. Eventually Google will rate limit you 😅.
+If that happens just use some other url. A "hello world" Nest.js app is also a good option; I played with that for a while. Just wanted to use Google to show that **this is a client problem**.
 ## Using `num-connections.sh` to help debug
 In the repo there is a Bash script that will show the number of TCP connections involving some port.
 ```bash
