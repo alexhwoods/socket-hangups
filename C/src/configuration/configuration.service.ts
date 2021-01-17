@@ -4,8 +4,9 @@ import * as Agent from 'agentkeepalive';
 const agentConfig = {
   maxSockets: 1,
   maxFreeSockets: 1,
-  timeout: 60,
-  freeSocketTimeout: 30,
+  timeout: 60 * 1000,
+  freeSocketTimeout: 30 * 1000,
+  socketActiveTTL: 1000,
 };
 
 @Injectable({ scope: Scope.DEFAULT })
