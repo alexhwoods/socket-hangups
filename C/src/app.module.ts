@@ -1,4 +1,5 @@
 import { Module, HttpModule } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigurationModule } from './configuration/configuration.module';
@@ -15,6 +16,7 @@ import { ConfigurationService } from './configuration/configuration.service';
         httpsAgent: configurationService.httpsAgent,
       }),
     }),
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService, ConfigurationService],
