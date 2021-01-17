@@ -1,24 +1,26 @@
 import { Module, HttpModule } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
+import * as Agent from 'agentkeepalive';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigurationModule } from './configuration/configuration.module';
-import { ConfigurationService } from './configuration/configuration.service';
+
+const agentConfig = {
+  maxSockets: 1,
+  maxFreeSockets: 1,
+};
 
 @Module({
   imports: [
-    ConfigurationModule,
     HttpModule.registerAsync({
-      imports: [ConfigurationModule],
-      inject: [ConfigurationService],
-      useFactory: (configurationService: ConfigurationService) => ({
-        httpAgent: configurationService.httpAgent,
-        httpsAgent: configurationService.httpsAgent,
+      useFactory: () => ({
+        httpAgent: new Agent(agentConfig),
+        httpsAgent: new Agent.HttpsAgent(agentConfig),
       }),
     }),
     ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService, ConfigurationService],
+  providers: [AppService],
 })
 export class AppModule {}

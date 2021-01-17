@@ -1,20 +1,12 @@
 import { Injectable, HttpService } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
-import { ConfigurationService } from './configuration/configuration.service';
-import * as util from 'util';
-import { AxiosError, AxiosRequestConfig } from 'axios';
-import * as Agent from 'agentkeepalive';
+import { AxiosError } from 'axios';
 
 let count = 0;
-// const url = 'http://localhost:3302';
 const url = 'https://google.com'
 
 @Injectable()
 export class AppService {
-  constructor(
-    private httpService: HttpService,
-    private configurationService: ConfigurationService,
-  ) {}
+  constructor(private httpService: HttpService) {}
 
   async getHello(): Promise<string> {
     count++;
@@ -42,7 +34,11 @@ export class AppService {
 
   async getHelloWithAxios(): Promise<string> {
     count++;
-    console.log(`${this.formatDate(new Date())} | (axios directly) received request ${count}`);
+    console.log(
+      `${this.formatDate(
+        new Date(),
+      )} | (axios directly) received request ${count}`,
+    );
 
     await this.httpService
       .axiosRef({
@@ -55,9 +51,7 @@ export class AppService {
       .catch(err => {
         if (err.isAxiosError) {
           const error = err as AxiosError;
-          console.log(
-            `${this.formatDate(new Date())} | ${error.message}`,
-          );
+          console.log(`${this.formatDate(new Date())} | ${error.message}`);
         }
       });
 
