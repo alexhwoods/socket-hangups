@@ -14,4 +14,9 @@ export class AppController {
   async getHelloWithAxios() {
     return this.appService.getHelloWithAxios();
   }
+
+  @Get('/observable')
+  getHelloWithObservable() {
+    return this.appService.getHelloWithObservable();
+  }
 }

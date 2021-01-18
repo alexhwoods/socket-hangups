@@ -1,6 +1,7 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { AxiosError, AxiosResponse } from 'axios';
-import { Observable } from 'rxjs';
+import { Observable} from 'rxjs';
+import { retry } from 'rxjs/operators';
 
 let count = 0;
 const url = 'https://google.com';
@@ -45,6 +46,14 @@ export class AppService {
         this.logFinished();
       })
       .catch(this.logError);
+  }
+
+  getHelloWithObservable() {
+    this.logIncomingRequest('(observable)');
+
+    this.httpService
+      .get(url)
+      .subscribe(() => this.logFinished(), err => this.logError(err));
   }
 
   logIncomingRequest(prefix) {
