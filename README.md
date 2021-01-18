@@ -17,13 +17,56 @@ Now, in another terminal do the following. Watch the console of the running Nest
 cd test
 
 # All requests to google.com will succeed
-requests=10 && k6 run --vus $requests --iterations $requests script-axios.js
+$ requests=10 && k6 run --vus $requests --iterations $requests script-axios.js
 
-# You'll see a bunch of "socket hang up" errors
-requests=10 && k6 run --vus $requests --iterations $requests script-http-service.js
+# (in the Nest app's console)
+6:45:28 | (axios directly) received request 1
+6:45:28 | (axios directly) received request 2
+6:45:28 | (axios directly) received request 3
+6:45:28 | (axios directly) received request 4
+6:45:28 | (axios directly) received request 5
+6:45:28 | (axios directly) received request 6
+6:45:28 | (axios directly) received request 7
+6:45:28 | (axios directly) received request 8
+6:45:28 | (axios directly) received request 9
+6:45:28 | (axios directly) received request 10
+6:45:29 | finished
+6:45:29 | finished
+6:45:29 | finished
+6:45:29 | finished
+6:45:29 | finished
+6:45:29 | finished
+6:45:29 | finished
+6:45:29 | finished
+6:45:29 | finished
+6:45:29 | finished
+
+
+
+$ requests=10 && k6 run --vus $requests --iterations $requests script-http-service.js
+
+# (in the Nest app's console)
+6:43:38 | (http service) received request 1
+6:43:38 | (http service) received request 2
+6:43:38 | (http service) received request 3
+6:43:38 | (http service) received request 4
+6:43:38 | (http service) received request 5
+6:43:38 | (http service) received request 6
+6:43:38 | (http service) received request 7
+6:43:38 | (http service) received request 8
+6:43:38 | (http service) received request 9
+6:43:38 | (http service) received request 10
+6:43:38 | finished
+6:43:38 | socket hang up
+6:43:38 | finished
+6:43:38 | socket hang up
+6:43:39 | finished
+6:43:39 | socket hang up
+6:43:39 | finished
+6:43:39 | socket hang up
+6:43:39 | finished
+6:43:39 | socket hang up
 ```
-
-In particular, it happens as soon as a socket goes to be reused for the first time. You'll notice that if you run the above tests with `requests=n-1`, where `n` is the size of the connection pool, you won't have an issue.
 
 Don't hit run it with too many requests. Eventually Google will rate limit you 😅.
 If that happens just use some other url. A "hello world" Nest.js app is also a good option; I played with that for a while. Just wanted to use Google to show that **this is a client problem**.
