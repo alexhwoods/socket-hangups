@@ -12,6 +12,6 @@ async function bootstrap() {
   console.log(JSON.stringify(server));
 
 
-  await app.listen(3302);
+  await app.listen(4002);
 }
 bootstrap();
