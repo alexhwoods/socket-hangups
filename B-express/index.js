@@ -3,7 +3,7 @@ const app = express()
 const port = 4001
 
 app.get('/', (req, res) => {
-  setTimeout(() => res.send('Hello World!'), 3 * 1000)
+  setTimeout(() => res.send('b-express'), 3 * 1000)
   
 })
 

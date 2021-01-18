@@ -10,6 +10,6 @@ export class AppService {
   async getHello(): Promise<string> {
     await sleep(3 * 1000);
 
-    return 'foo';
+    return 'b';
   }
 }
