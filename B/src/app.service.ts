@@ -8,8 +8,6 @@ export class AppService {
   constructor() {}
 
   async getHello(): Promise<string> {
-    await sleep(3 * 1000);
-
     return 'b';
   }
 }

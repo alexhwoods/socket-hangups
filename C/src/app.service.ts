@@ -5,6 +5,8 @@ import * as util from 'util';
 import { AxiosError, AxiosRequestConfig } from 'axios';
 import * as Agent from 'agentkeepalive';
 
+const sleep = util.promisify(setTimeout);
+
 let count = 0;
 
 @Injectable()
@@ -23,7 +25,22 @@ export class AppService {
     );
 
     await this.httpService
-      .get('http://localhost:3302')
+      .get('http://localhost:4002')
+      .toPromise()
+      .then(value => {
+        console.log(`${this.formatDate(new Date())} | finished`);
+      })
+      .catch(err => {
+        if (err.isAxiosError) {
+          const error = err as AxiosError;
+          console.log(`${this.formatDate(new Date())} | ${error.message}`);
+        }
+      });
+
+    sleep(5)
+
+    await this.httpService
+      .get('http://localhost:4002')
       .toPromise()
       .then(value => {
         console.log(`${this.formatDate(new Date())} | finished`);
