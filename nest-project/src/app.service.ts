@@ -1,10 +1,9 @@
 import { Injectable, HttpService } from '@nestjs/common';
-import { AxiosError, AxiosResponse } from 'axios';
-import { Observable} from 'rxjs';
-import { retry } from 'rxjs/operators';
+import { AxiosError } from 'axios';
 
 let count = 0;
-const url = 'https://google.com';
+const google = 'https://google.com'
+const url = google
 
 function formatDate(date) {
   return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
@@ -22,7 +21,7 @@ export class AppService {
     this.logIncomingRequest('(http service)');
 
     await this.httpService
-      .get(url)
+      .get(google)
       .toPromise()
       .then(value => {
         this.logFinished();
@@ -46,14 +45,6 @@ export class AppService {
         this.logFinished();
       })
       .catch(this.logError);
-  }
-
-  getHelloWithObservable() {
-    this.logIncomingRequest('(observable)');
-
-    this.httpService
-      .get(url)
-      .subscribe(() => this.logFinished(), err => this.logError(err));
   }
 
   logIncomingRequest(prefix) {

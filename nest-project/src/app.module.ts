@@ -6,9 +6,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 const agentConfig = {
-  maxSockets: 1,
-  maxFreeSockets: 1,
-};
+  maxSockets: 3,
+  maxFreeSockets: 3,
+  timeout: 55000,
+  freeSocketTimeout: 27500,
+}
 
 @Module({
   imports: [
